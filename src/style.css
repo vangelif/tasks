@@ -1,0 +1,78 @@
+body {
+  text-align: center;
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
+  background-color: lightgoldenrodyellow;
+}
+
+.box {
+  margin: 7% 12%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  border: 7px solid goldenrod;
+  background-color: lightblue;
+  border-radius: 10px;
+}
+
+.box span > i {
+  font-size: 20px;
+}
+
+.insert-form > input {
+  width: 30%;
+  height: 100%;
+  padding-inline: 3%;
+  padding-block: 1%;
+  font-size: 20px;
+}
+
+.insert-form > button {
+  width: 5%;
+  height: 125%;
+  font-size: 15px;
+  padding: 1% 1%;
+  background-color: lightsalmon;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.todo-el {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.todo-el input[type='checkbox'] {
+  transform: scale(2.5);
+}
+
+.todo-el p {
+  width: 15%;
+  text-align: left;
+}
+
+.completed {
+  background-color: lightcyan;
+}
+
+.completed p {
+  text-decoration: line-through;
+}
+
+.eraser {
+  margin: 2% 2%;
+}
+
+.eraser > button {
+  background-color: lightsalmon;
+  margin: 0;
+  padding: 2% 30%;
+  font-size: 20px;
+  border-radius: 10px;
+}
