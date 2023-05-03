@@ -57,6 +57,10 @@ body {
   text-align: left;
 }
 
+.fa-trash-can {
+  cursor: pointer;
+}
+
 .completed {
   background-color: lightcyan;
 }
