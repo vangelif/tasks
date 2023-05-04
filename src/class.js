@@ -1,7 +1,6 @@
 export default class Task {
   constructor() {
-    const data = JSON.parse(localStorage.getItem('storage-task'));
-    this.todo = Array.isArray(data) ? data : [];
+    this.todo = JSON.parse(localStorage.getItem('storage-task')) ?? [];
   }
 
   addTask(description) {
