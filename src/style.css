@@ -39,7 +39,15 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
+.dots {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
 
+.eraser {
+  cursor: pointer;
+}
 .todo-el {
   display: flex;
   gap: 20px;
