@@ -1,43 +1,61 @@
 import './style.css';
+import Task from './class.js';
 
-const todos = [
-  {
-    description: 'mopping',
-    completed: true,
-    index: 3,
-  },
-  {
-    description: 'clean windows',
-    completed: true,
-    index: 2,
-  },
-  {
-    description: 'laundry',
-    completed: false,
-    index: 1,
-  },
-];
+const itemsDisplay = document.getElementById('container');
+const itemValue = document.getElementById('task');
+const addItemBtn = document.getElementById('add');
 
-const todoList = () => {
-  const container = document.getElementById('container');
-  todos.sort((a, b) => a.index - b.index);
-  for (let i = 0; i < todos.length; i += 1) {
+const tasks = new Task();
+
+const display = () => {
+  itemsDisplay.innerHTML = '';
+
+  for (let i = 0; i < tasks.todo.length; i += 1) {
     const task = document.createElement('div');
-    task.classList.add('todo-el');
-    task.innerHTML = `
-    <input type='checkbox'>
-    <p>${todos[i].description}</p>
-    `;
-    container.appendChild(task);
-  }
 
-  container.addEventListener('change', (event) => {
-    if (event.target.type === 'checkbox') {
-      const task = event.target.closest('.todo-el');
-      task.classList.toggle('completed');
-    }
-  });
+    task.className = 'todo-el';
+    const isTicked = tasks.todo[i].completed ? 'checked' : '';
+    task.innerHTML = `
+      <input type="checkbox" ${isTicked} onfocus="store(${i})" onchange="toggleCheckbox(${i})">
+      <p id="edit" contenteditable="true">${tasks.todo[i].description}</p>
+      <div>
+      <span class="trash" onclick="remove(${i})"><i class="fa-solid fa-trash-can">  </i></span>
+        <button class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      </div>
+      `;
+    itemsDisplay.appendChild(task);
+
+    const edit = task.querySelector('#edit');
+
+    edit.addEventListener('blur', () => {
+      tasks.todo[i].description = edit.textContent;
+      tasks.updateStorage(tasks.todo);
+    });
+
+    edit.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        edit.blur();
+      }
+    });
+  }
+  tasks.updateStorage(tasks.todo);
 };
-document.addEventListener('DOMContentLoaded', () => {
-  todoList();
+
+document.toggleCheckbox = (index) => {
+  tasks.todo[index].completed = !tasks.todo[index].completed;
+  display();
+};
+
+addItemBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  tasks.addTask(itemValue.value);
+  display();
+  itemValue.value = '';
 });
+
+document.remove = (index) => {
+  tasks.removeTask(index);
+  tasks.updateStorage(tasks.todo);
+  display();
+};
+display();

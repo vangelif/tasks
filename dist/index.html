@@ -14,15 +14,16 @@
   <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
   <body>
     <div class="box">
-      <span>Day-to-day Tasks <i class="fa-solid fa-arrows-rotate"></i></span>
+      <span><h1>Day-to-day Tasks</h1></span>
 
       <div class="insert-form">
-        <input type="text" placeholder="Add to your list..." />
-        <button>+</button>
+        <input id="task" type="text" placeholder="📝 Add to your list..." />
+        <button id="add" type="button">
+          <i class="fa-sharp fa-solid fa-plus"></i>
+        </button>
       </div>
       <div id="container"></div>
-      <div class="eraser"><button>Clear all completed</button></div>
+      <div class="eraser"><button>Clear All Completed</button></div>
     </div>
   </body>
 </html>
-
