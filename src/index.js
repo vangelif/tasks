@@ -8,43 +8,53 @@ const eraseAll = document.querySelector('.eraser');
 
 const tasks = new Task();
 
+const createTaskElement = (task, index) => {
+  const taskElement = document.createElement('div');
+  taskElement.className = 'todo-el';
+
+  const isTicked = task.completed ? 'checked' : '';
+  taskElement.innerHTML = `
+    <input type="checkbox" ${isTicked} onchange="toggleCheckbox(${index})">
+    <p id="edit" contenteditable="true">${task.description}</p>
+    <div>
+      <span class="trash" onclick="remove(${index})"><i class="fa-solid fa-trash-can">  </i></span>
+      <button class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+    </div>
+  `;
+  // display();
+  return taskElement;
+};
+
+const attachBlurListener = (taskElement, task) => {
+  const edit = taskElement.querySelector('#edit');
+
+  edit.addEventListener('blur', () => {
+    task.description = edit.textContent;
+    tasks.updateStorage(tasks.todo);
+  });
+
+  edit.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+      edit.blur();
+    }
+  });
+};
+
 const display = () => {
   itemsDisplay.innerHTML = '';
 
   for (let i = 0; i < tasks.todo.length; i += 1) {
-    const task = document.createElement('div');
-
-    task.className = 'todo-el';
-    const isTicked = tasks.todo[i].completed ? 'checked' : '';
-    task.innerHTML = `
-      <input type="checkbox" ${isTicked} onchange="toggleCheckbox(${i})">
-      <p id="edit" contenteditable="true">${tasks.todo[i].description}</p>
-      <div>
-      <span class="trash" onclick="remove(${i})"><i class="fa-solid fa-trash-can">  </i></span>
-        <button class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-      </div>
-      `;
-    itemsDisplay.appendChild(task);
-
-    const edit = task.querySelector('#edit');
-
-    edit.addEventListener('blur', () => {
-      tasks.todo[i].description = edit.textContent;
-      tasks.updateStorage(tasks.todo);
-    });
-
-    edit.addEventListener('keyup', (event) => {
-      if (event.key === 'Enter') {
-        edit.blur();
-      }
-    });
+    const task = tasks.todo[i];
+    const taskElement = createTaskElement(task, i);
+    itemsDisplay.appendChild(taskElement);
+    attachBlurListener(taskElement, task, i);
   }
-
   tasks.updateStorage(tasks.todo);
 };
 
 document.toggleCheckbox = (index) => {
   tasks.todo[index].completed = !tasks.todo[index].completed;
+
   display();
 };
 
